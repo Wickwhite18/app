@@ -1,0 +1,64 @@
+{
+    "api_keys": {
+        "opencellid": "",
+        "unwiredlabs": "",
+        "google_geolocation": "",
+        "opencage": "",
+        "abstractapi": "",
+        "numverify": "",
+        "ipqualityscore": ""
+    },
+    "scraping": {
+        "user_agents": [
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15",
+            "Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0"
+        ],
+        "timeout": 30,
+        "max_retries": 3,
+        "retry_delay": 1.0,
+        "max_concurrent": 10
+    },
+    "settings": {
+        "cache_enabled": true,
+        "cache_ttl": 3600,
+        "cache_compression": true,
+        "rate_limit_enabled": true,
+        "database_path": "data/cell_towers.db",
+        "max_workers": 5
+    },
+    "rate_limits": {
+        "opencellid": {
+            "calls_per_minute": 60,
+            "calls_per_day": 10000
+        },
+        "google_geolocation": {
+            "calls_per_minute": 100,
+            "calls_per_day": 100000
+        },
+        "unwiredlabs": {
+            "calls_per_minute": 20,
+            "calls_per_day": 5000
+        },
+        "opencage": {
+            "calls_per_minute": 60,
+            "calls_per_day": 2500
+        },
+        "abstractapi": {
+            "calls_per_minute": 30,
+            "calls_per_day": 1000
+        },
+        "numverify": {
+            "calls_per_minute": 30,
+            "calls_per_day": 1000
+        },
+        "ipqualityscore": {
+            "calls_per_minute": 30,
+            "calls_per_day": 1000
+        },
+        "default": {
+            "calls_per_minute": 30,
+            "calls_per_day": 1000
+        }
+    }
+}
