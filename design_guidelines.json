@@ -1,0 +1,120 @@
+{
+  "theme": {
+    "name": "OSINT Terminal",
+    "mode": "dark",
+    "colors": {
+      "background": "#050505",
+      "surface": "#0A0A0A",
+      "surface_highlight": "#151515",
+      "border": "#333333",
+      "border_active": "#00FF94",
+      "primary": "#00FF94",
+      "secondary": "#00F0FF",
+      "accent": "#7000FF",
+      "danger": "#FF0055",
+      "warning": "#FFD600",
+      "text": {
+        "primary": "#E0E0E0",
+        "secondary": "#A0A0A0",
+        "muted": "#525252",
+        "inverse": "#050505"
+      }
+    },
+    "typography": {
+      "headings": {
+        "family": "Rajdhani, sans-serif",
+        "weights": ["500", "600", "700"],
+        "letterSpacing": "tracking-wide"
+      },
+      "body": {
+        "family": "Inter, sans-serif",
+        "weights": ["400", "500"]
+      },
+      "mono": {
+        "family": "JetBrains Mono, monospace",
+        "weights": ["400", "500"]
+      }
+    },
+    "radius": {
+      "default": "0px",
+      "sm": "0px",
+      "md": "2px",
+      "lg": "4px",
+      "full": "9999px"
+    },
+    "shadows": {
+      "glow_primary": "0 0 20px rgba(0, 255, 148, 0.3)",
+      "glow_secondary": "0 0 20px rgba(0, 240, 255, 0.3)",
+      "glow_danger": "0 0 20px rgba(255, 0, 85, 0.3)"
+    }
+  },
+  "layout": {
+    "container": "max-w-[1600px] mx-auto px-6 md:px-12",
+    "grid_gap": "gap-6",
+    "section_spacing": "py-12 md:py-20"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "bg-black/40 backdrop-blur-xl border border-white/10",
+    "neon_border": "border border-primary/50 shadow-[0_0_10px_rgba(0,255,148,0.2)]",
+    "scanline_effect": "bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,6px_100%]",
+    "terminal_cursor": "after:content-[''] after:w-2 after:h-4 after:bg-primary after:inline-block after:animate-pulse"
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-black font-bold uppercase tracking-widest hover:bg-primary/90 hover:shadow-[0_0_15px_rgba(0,255,148,0.5)] transition-all duration-300 rounded-none",
+      "secondary": "bg-transparent border border-secondary text-secondary hover:bg-secondary/10 hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all duration-300 rounded-none",
+      "danger": "bg-transparent border border-danger text-danger hover:bg-danger/10 transition-all duration-300 rounded-none"
+    },
+    "cards": {
+      "default": "bg-surface border border-white/10 p-6 relative overflow-hidden group hover:border-white/20 transition-colors",
+      "hacker": "bg-black border border-primary/30 relative p-6 before:absolute before:top-0 before:left-0 before:w-2 before:h-2 before:border-t-2 before:border-l-2 before:border-primary after:absolute after:bottom-0 after:right-0 after:w-2 after:h-2 after:border-b-2 after:border-r-2 after:border-primary"
+    },
+    "inputs": {
+      "default": "bg-black border border-white/20 focus:border-primary focus:ring-1 focus:ring-primary/50 text-white placeholder:text-white/30 rounded-none h-12"
+    }
+  },
+  "image_urls": {
+    "backgrounds": [],
+    "placeholders": {
+      "map_viz": "https://images.unsplash.com/photo-1601037295085-6c17aa4e40a7",
+      "hacker_silhouette": "https://images.unsplash.com/photo-1541727261696-8680e53c1149"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install 'lucide-react' for icons. Do NOT use emojis.",
+    "Install 'recharts' for data visualization.",
+    "Configure 'tailwind.config.js' to use the specific colors and fonts defined.",
+    "Create a global CSS file that imports 'Rajdhani' and 'JetBrains Mono' from Google Fonts.",
+    "Apply the 'scanline_effect' class to the main app container for a subtle retro feel.",
+    "Use 'grid-cols-12' bento layouts for the Dashboard.",
+    "Implement the 'Mr~Wh!te' credits in the footer with a glitch animation.",
+    "Ensure all API calls have a visible loading state with a progress bar (e.g., 'Scanning...').",
+    "Use Uppercase labels for all data fields to mimic military/intel displays."
+  ],
+  "accessibility": {
+    "contrast": "Ensure all text meets WCAG AA standards (4.5:1). Use 'text-primary' on black sparingly for emphasis.",
+    "reduced_motion": "Disable scanlines and glitch effects if 'prefers-reduced-motion' is true."
+  },
+  "universal_guidelines": [
+     "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯📚🎭🎬🎪🎉🎊🎁🎀🎂🍰🎈🎨🎰💰💵💳🏦💎🪙💸🤑📊📈📉💹🔢🏆🥇 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN",
+    "Prioritize using pre-existing components from src/components/ui when applicable",
+    "Create new components that match the style and conventions of existing components when needed",
+    "Examine existing components to understand the project's component patterns before creating new ones",
+    "Components MUST use named exports (export const ComponentName = ...)",
+    "Pages MUST use default exports (export default function PageName() {...})",
+    "Use 'sonner' for toasts",
+    "Sonner component are located in /app/src/components/ui/sonner.tsx"
+  ]
+}
