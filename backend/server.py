@@ -29,7 +29,8 @@ from pathlib import Path
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from fastapi import FastAPI, APIRouter, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import StreamingResponse
+import httpx
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -1082,6 +1083,72 @@ class APIKeyUpdate(BaseModel):
 
 class CacheAction(BaseModel):
     action: str
+
+
+def _geoengine_configuration() -> Tuple[str, str, str]:
+    """Return the configured upstream service without ever exposing its key."""
+    url = os.environ.get("GEOENGINE_API_URL", "").rstrip("/")
+    key = os.environ.get("GEOENGINE_API_KEY", "")
+    key_header = os.environ.get("GEOENGINE_API_KEY_HEADER", "x-api-key").lower()
+    if not url:
+        raise HTTPException(
+            status_code=503,
+            detail="Geoengine backend is not configured. Set GEOENGINE_API_URL on the server.",
+        )
+    parsed_url = urllib.parse.urlparse(url)
+    if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
+        raise HTTPException(status_code=500, detail="GEOENGINE_API_URL must be an absolute HTTP(S) URL")
+    if not re.fullmatch(r"[a-z0-9-]+", key_header):
+        raise HTTPException(status_code=500, detail="GEOENGINE_API_KEY_HEADER is invalid")
+    return url, key, key_header
+
+
+@api_router.api_route(
+    "/geoengine/{upstream_path:path}",
+    methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
+)
+async def proxy_geoengine(request: Request, upstream_path: str):
+    """Proxy Geoengine calls so browser clients never receive the service key."""
+    base_url, api_key, key_header = _geoengine_configuration()
+    url = f"{base_url}/{upstream_path.lstrip('/')}"
+    headers = {"accept": request.headers.get("accept", "application/json")}
+    content_type = request.headers.get("content-type")
+    if content_type:
+        headers["content-type"] = content_type
+    if api_key:
+        headers[key_header] = api_key
+
+    client = httpx.AsyncClient(timeout=30.0)
+    try:
+        upstream_request = client.build_request(
+            request.method,
+            url,
+            params=request.query_params,
+            content=await request.body(),
+            headers=headers,
+        )
+        upstream = await client.send(upstream_request, stream=True)
+    except httpx.HTTPError as exc:
+        await client.aclose()
+        raise HTTPException(status_code=503, detail="Geoengine backend is unreachable") from exc
+
+    response_headers = {}
+    for header in ("content-disposition", "content-type"):
+        if header in upstream.headers:
+            response_headers[header] = upstream.headers[header]
+    async def response_body():
+        try:
+            async for chunk in upstream.aiter_raw():
+                yield chunk
+        finally:
+            await upstream.aclose()
+            await client.aclose()
+
+    return StreamingResponse(
+        response_body(),
+        status_code=upstream.status_code,
+        headers=response_headers,
+    )
 
 
 # ---- API Routes ----

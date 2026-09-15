@@ -1,31 +1,29 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "@/App.css";
-import Layout from "@/components/Layout";
-import PhoneAnalysis from "@/components/pages/PhoneAnalysis";
-import TowerLookup from "@/components/pages/TowerLookup";
-import AreaSearch from "@/components/pages/AreaSearch";
-import Statistics from "@/components/pages/Statistics";
-import Settings from "@/components/pages/Settings";
-import CacheManagement from "@/components/pages/CacheManagement";
-import About from "@/components/pages/About";
+import DashboardLayout from "@/components/DashboardLayout";
+import {
+  ForensicsPage,
+  GeofencesPage,
+  HistoryPage,
+  LocatePage,
+  MonitorPage,
+  SettingsPage,
+} from "@/components/pages/GeoenginePages";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      <div className="scanline-overlay" />
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<PhoneAnalysis />} />
-          <Route path="/tower" element={<TowerLookup />} />
-          <Route path="/area" element={<AreaSearch />} />
-          <Route path="/stats" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/cache" element={<CacheManagement />} />
-          <Route path="/about" element={<About />} />
+        <Route element={<DashboardLayout />}>
+          <Route path="/" element={<LocatePage />} />
+          <Route path="/monitor" element={<MonitorPage />} />
+          <Route path="/geofences" element={<GeofencesPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/forensics" element={<ForensicsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;
