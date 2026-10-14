@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const proxyPath = "/api/geoengine";
+const proxyPath = `${process.env.REACT_APP_BACKEND_URL}/api/geoengine`;
 
 export const locateRequestSchema = z.object({
   cells: z.array(z.object({
